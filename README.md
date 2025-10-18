@@ -1,10 +1,5 @@
 # 📘 CheatSheets 
 
-Cheat sheets synthétiques pour mes 5 promos.  
-Focus sur l’essentiel, imprimables et toujours à jour (enfin...quand j'ai le temps nécessaire...)
-
----
-
 ## Cours
 
 - [Accessibilité](./accessibilite.md)
