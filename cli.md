@@ -1,4 +1,140 @@
-# Lignes de commande
+# CLI CheatSheet
+
+## Table des matières
+
+1. [Le Terminal Linux](#le-terminal-linux)
+   - [Obtenir de l'aide sous Linux](#obtenir-de-laide-sous-linux)
+   - [Pages MAN](#pages-man)
+   - [Vérifier le type de commande](#vérifier-le-type-de-commande)
+   - [Obtenir de l'aide pour les commandes intégrées au shell](#obtenir-de-laide-pour-les-commandes-intégrées-au-shell)
+   - [Rechercher dans les pages man](#rechercher-dans-les-pages-man)
+   - [Raccourcis clavier](#raccourcis-clavier)
+   - [Historique Bash](#historique-bash)
+   - [Obtenir l'accès root (sudo, su)](#obtenir-laccès-root-sudo-su)
+
+2. [Chemins Linux](#chemins-linux)
+   - [Chemins](#chemins)
+   - [Changer de répertoire](#changer-de-répertoire)
+   - [Installer des outils](#installer-des-outils)
+   - [Utiliser Tree](#utiliser-tree)
+
+3. [La commande ls](#la-commande-ls)
+   - [Lister les répertoires](#lister-les-répertoires)
+   - [Options](#options)
+   - [Utilisation du disque](#utilisation-du-disque)
+   - [Horodatage des fichiers et date](#horodatage-des-fichiers-et-date)
+   - [Modifier les horodatages avec Touch](#modifier-les-horodatages-avec-touch)
+   - [Date et calendrier](#date-et-calendrier)
+   - [Tri avec ls](#tri-avec-ls)
+
+4. [Visualiser les fichiers (cat, less, more, head, tail, watch)](#visualiser-les-fichiers-cat-less-more-head-tail-watch)
+   - [Afficher le contenu des fichiers](#afficher-le-contenu-des-fichiers)
+   - [Raccourcis Less](#raccourcis-less)
+   - [Tail et Head](#tail-et-head)
+   - [Commandes de surveillance](#commandes-de-surveillance)
+
+5. [Travailler avec les fichiers et répertoires](#travailler-avec-les-fichiers-et-répertoires)
+   - [Créer et mettre à jour des fichiers](#créer-et-mettre-à-jour-des-fichiers)
+   - [Créer des répertoires](#créer-des-répertoires)
+   - [La commande cp](#la-commande-cp)
+   - [La commande mv](#la-commande-mv)
+   - [La commande rm](#la-commande-rm)
+   - [Suppression sécurisée de fichiers](#suppression-sécurisée-de-fichiers)
+
+6. [Tubes et redirection de commandes](#tubes-et-redirection-de-commandes)
+   - [Exemples de tubes](#exemples-de-tubes)
+   - [Redirection de commandes](#redirection-de-commandes)
+
+7. [Trouver des fichiers avec locate et find](#trouver-des-fichiers-avec-locate-et-find)
+   - [locate](#locate)
+   - [find](#find)
+
+8. [Rechercher des motifs de texte avec grep](#rechercher-des-motifs-de-texte-avec-grep)
+   - [Options](#options-1)
+   - [Extraire les caractères ASCII des fichiers binaires](#extraire-les-caractères-ascii-des-fichiers-binaires)
+
+9. [VIM - Éditeur de texte](#vim---éditeur-de-texte)
+   - [Modes](#modes)
+   - [Fichier de configuration](#fichier-de-configuration)
+   - [Commandes](#commandes)
+   - [Navigation](#navigation)
+
+10. [Gestion des comptes](#gestion-des-comptes)
+    - [Surveillance des utilisateurs](#surveillance-des-utilisateurs)
+
+11. [Permissions de fichiers](#permissions-de-fichiers)
+    - [Comprendre les permissions](#comprendre-les-permissions)
+    - [Afficher les permissions](#afficher-les-permissions)
+    - [Changer les permissions](#changer-les-permissions)
+    - [Mode absolu](#mode-absolu)
+    - [Permissions spéciales](#permissions-spéciales)
+    - [UMASK](#umask)
+    - [Propriété](#propriété)
+    - [Attributs de fichier](#attributs-de-fichier)
+
+12. [Processus](#processus)
+    - [Visualisation des processus](#visualisation-des-processus)
+    - [Vue dynamique en temps réel](#vue-dynamique-en-temps-réel)
+    - [Tuer des processus](#tuer-des-processus)
+    - [Gestion arrière-plan et premier plan](#gestion-arrière-plan-et-premier-plan)
+
+13. [Réseau](#réseau)
+    - [Obtenir les informations d'interface réseau](#obtenir-les-informations-dinterface-réseau)
+    - [Configurer les interfaces réseau](#configurer-les-interfaces-réseau)
+    - [Netplan pour la configuration réseau statique sur Ubuntu](#netplan-pour-la-configuration-réseau-statique-sur-ubuntu)
+
+14. [Configuration et gestion OpenSSH](#configuration-et-gestion-openssh)
+    - [Installation](#installation)
+    - [Connexion serveur](#connexion-serveur)
+    - [Configuration de sécurité](#configuration-de-sécurité)
+
+15. [Techniques de transfert de fichiers avec SCP et RSYNC](#techniques-de-transfert-de-fichiers-avec-scp-et-rsync)
+    - [Utilisation SCP](#utilisation-scp)
+    - [Commandes RSYNC](#commandes-rsync)
+    - [Exemple de motifs d'exclusion](#exemple-de-motifs-dexclusion)
+    - [WGET pour le téléchargement de fichiers](#wget-pour-le-téléchargement-de-fichiers)
+
+16. [Utilisation de NETSTAT et SS](#utilisation-de-netstat-et-ss)
+
+17. [Commandes LSOF](#commandes-lsof)
+
+18. [Guide de scan Nmap](#guide-de-scan-nmap)
+
+19. [Gestion logicielle avec DPKG et APT](#gestion-logicielle-avec-dpkg-et-apt)
+    - [DPKG](#dpkg)
+    - [APT](#apt)
+
+20. [Planification de tâches avec Cron](#planification-de-tâches-avec-cron)
+
+21. [Obtenir les informations matérielles du système](#obtenir-les-informations-matérielles-du-système)
+    - [Matériel général](#matériel-général)
+    - [Informations CPU](#informations-cpu)
+    - [Informations mémoire](#informations-mémoire)
+    - [Périphériques PCI et USB](#périphériques-pci-et-usb)
+    - [Périphériques de stockage](#périphériques-de-stockage)
+    - [Périphériques réseau](#périphériques-réseau)
+    - [Informations système via /proc](#informations-système-via-proc)
+    - [Batterie](#batterie)
+    - [Travailler avec les fichiers de périphérique (dd)](#travailler-avec-les-fichiers-de-périphérique-dd)
+
+22. [Gestion des services](#gestion-des-services)
+    - [Ubuntu](#ubuntu)
+    - [CentOS](#centos)
+
+23. [Configuration de sécurité](#configuration-de-sécurité-1)
+
+24. [Programmation Bash](#programmation-bash)
+    - [Alias Bash](#alias-bash)
+    - [Alias utiles](#alias-utiles)
+    - [Manipulation de fichiers interactive](#manipulation-de-fichiers-interactive)
+    - [Variables Bash](#variables-bash)
+    - [Variables spéciales](#variables-spéciales)
+    - [Contrôle de flux du programme](#contrôle-de-flux-du-programme)
+    - [Conditions de test](#conditions-de-test)
+    - [Boucles et fonctions](#boucles-et-fonctions)
+    - [Exemples de commandes](#exemples-de-commandes)
+
+---
 
 ## Le Terminal Linux
 
