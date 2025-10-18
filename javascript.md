@@ -1,4 +1,4 @@
-# JavaScript Cheat Sheet Complet
+# JavaScript CheatSheet 
 
 ## Table des matières
 1. [Variables et Types de données](#variables-et-types-de-données)
