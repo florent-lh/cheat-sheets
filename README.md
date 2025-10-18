@@ -5,7 +5,7 @@ Focus sur l’essentiel, imprimables et toujours à jour (enfin...quand j'ai le 
 
 ---
 
-## 🧭 Index
+## Cours
 
 - [Accessibilité](./accessibilite.md)
 - [Angular](./angular.md)
