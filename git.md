@@ -507,6 +507,3 @@ git config --global url."https://github.com/".insteadOf git://github.com/
 ```
 
 ---
-
-**Version:** Compatible avec Git 2.45+ (2024)  
-**Dernière mise à jour:** Octobre 2025
