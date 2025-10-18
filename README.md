@@ -10,7 +10,7 @@
 - [Git](./git.md)
 - [HTML](./html.md)
 - [JavaScript](./javascript.md)
-- [MySQL](./mysqlt.md)
+- [MySQL](./mysql.md)
 - [Next.js](./next.md)
 - [Node](./node.md)
 - [PHP](./php.md)
