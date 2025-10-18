@@ -1282,5 +1282,3 @@ class Observable {
 
 ---
 
-*Créé avec ❤️ pour la communauté JavaScript*
-
