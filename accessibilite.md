@@ -1,4 +1,4 @@
-# Cheat Sheet Accessibilité HTML
+# Accessibilité CheatSheet
 
 ## Table des matières
 - [Introduction à l'accessibilité](#introduction-à-laccessibilité)
