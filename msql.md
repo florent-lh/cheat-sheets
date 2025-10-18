@@ -1,4 +1,4 @@
-# Cheat Sheet MySQL Complet
+# MySQL CheatSheet  
 
 ## Table des Matières
 
