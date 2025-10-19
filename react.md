@@ -1,4 +1,4 @@
-# React Cheat Sheet Complet 2025
+# React CheatSheet 
 
 ## Table des matières
 - [Installation et Setup](#installation-et-setup)
