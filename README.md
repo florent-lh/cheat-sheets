@@ -13,6 +13,7 @@
 - [MySQL](./mysql.md)
 - [Next.js](./next.md)
 - [Node](./node.md)
+- [PWA](./pwa.md)
 - [PHP](./php.md)
 - [PostgreSQL](./postgresql.md)
 - [Python](./python.md)
