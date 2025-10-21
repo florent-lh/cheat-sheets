@@ -72,7 +72,7 @@ let readonly: ReadonlyArray<number> = [1, 2, 3];
 
 // Tuples
 let tuple: [string, number] = ["age", 30];
-let tupleLabelé: [nom: string, age: number] = ["Bob", 25];
+let tupleLabeled: [nom: string, age: number] = ["Bob", 25];
 
 // Tuple avec rest
 let tupleRest: [string, ...number[]] = ["hello", 1, 2, 3];
@@ -92,7 +92,7 @@ enum Direction {
 }
 
 // Enum string
-enum Couleur {
+enum Color {
   Rouge = "ROUGE",
   Vert = "VERT",
   Bleu = "BLEU"
@@ -195,12 +195,12 @@ function estString(value: unknown): value is string {
 }
 
 // Discriminated unions
-type Succès = { type: "succès"; data: string };
-type Erreur = { type: "erreur"; error: Error };
-type Résultat = Succès | Erreur;
+type Success = { type: "success"; data: string };
+type Error = { type: "error"; error: Error };
+type Result = Success | Error;
 
-function traiter(result: Résultat) {
-  if (result.type === "succès") {
+function traiter(result: Result) {
+  if (result.type === "success") {
     console.log(result.data);
   } else {
     console.log(result.error);
@@ -300,13 +300,13 @@ interface Utilisateur {
 
 // Extension d'interface
 interface Admin extends Utilisateur {
-  privilèges: string[];
+  privileges: string[];
 }
 
 // Interfaces multiples
 interface Identifiable { id: number; }
 interface Nommable { nom: string; }
-interface Entité extends Identifiable, Nommable {}
+interface Entite extends Identifiable, Nommable {}
 
 // Interface pour fonctions
 interface Calculatrice {
@@ -323,13 +323,13 @@ interface Compteur {
 }
 
 // Declaration merging
-interface Fenêtre {
+interface Fenetre {
   titre: string;
 }
-interface Fenêtre {
+interface Fenetre {
   largeur: number;
 }
-// Fenêtre a maintenant titre et largeur
+// Fenetre a maintenant titre et largeur
 ```
 
 ### Type Aliases
@@ -341,178 +341,269 @@ type Point = {
 };
 
 // Union type alias
-type Résultat = Succès | Échec;
+type Result = Success | Failure;
 
 // Intersection type alias
 type UtilisateurComplet = Utilisateur & Admin & Metadata;
 
 // Function type alias
-type Opération = (a: number, b: number) => number;
+type Operation = (a: number, b: number) => number;
 
 // Generic type alias
 type Container<T> = { value: T };
 
-// Recursive type alias
-type JSONValue = 
-  | string
-  | number
-  | boolean
-  | null
-  | JSONValue[]
-  | { [key: string]: JSONValue };
+// Tuple type alias
+type Point3D = [number, number, number];
 
 // Conditional type alias
 type NonNullable<T> = T extends null | undefined ? never : T;
-```
-
-### Interface vs Type
-```typescript
-// ✅ Interface peut être étendue
-interface Animal { nom: string; }
-interface Chien extends Animal { race: string; }
-
-// ✅ Type peut utiliser unions/intersections
-type Pet = Chien | Chat;
-
-// ✅ Interface supporte declaration merging
-interface Utilisateur { nom: string; }
-interface Utilisateur { age: number; }
-
-// ✅ Type peut créer des aliases pour primitifs
-type ID = string | number;
-
-// ⚠️ Préférer interface pour objets publics
-// ⚠️ Préférer type pour unions/utilitaires complexes
 ```
 
 ---
 
 ## Classes
 
-### Classes de base
+### Classes basiques
 ```typescript
-class Personne {
-  // Propriétés
-  nom: string;
+// Classe simple
+class Person {
+  name: string;
   age: number;
-  private _secret: string; // private
-  protected familyName: string; // protected
-  readonly id: number; // readonly
 
-  // Constructeur
-  constructor(nom: string, age: number) {
-    this.nom = nom;
+  constructor(name: string, age: number) {
+    this.name = name;
     this.age = age;
-    this.id = Date.now();
   }
 
-  // Méthode
-  présenter(): string {
-    return `Je suis ${this.nom}, ${this.age} ans`;
-  }
-
-  // Getter
-  get secret(): string {
-    return this._secret;
-  }
-
-  // Setter
-  set secret(value: string) {
-    this._secret = value;
-  }
-
-  // Méthode statique
-  static créer(nom: string): Personne {
-    return new Personne(nom, 0);
+  greet(): string {
+    return `Hello, I'm ${this.name}`;
   }
 }
 
-// Shorthand constructor
-class Point {
+// Modificateurs d'accès
+class Employee {
+  public name: string;        // Accessible partout
+  private salary: number;     // Accessible uniquement dans la classe
+  protected id: number;       // Accessible dans la classe et sous-classes
+  readonly company: string;   // Ne peut pas être modifié
+
+  constructor(name: string, salary: number, id: number) {
+    this.name = name;
+    this.salary = salary;
+    this.id = id;
+    this.company = "MyCompany";
+  }
+
+  getSalary(): number {
+    return this.salary; // OK car dans la classe
+  }
+}
+
+// Propriétés en paramètres (shorthand)
+class User {
   constructor(
-    public x: number,
-    public y: number,
-    private id: string = "default"
+    public name: string,
+    private email: string,
+    readonly id: number
   ) {}
 }
 ```
 
-### Héritage et Polymorphisme
+### Héritage
 ```typescript
-// Classe abstraite
-abstract class Forme {
-  abstract calculerAire(): number;
-  
-  décrire(): string {
-    return `Aire: ${this.calculerAire()}`;
+// Classe de base
+class Animal {
+  constructor(public name: string) {}
+
+  move(distance: number): void {
+    console.log(`${this.name} moved ${distance}m`);
   }
 }
 
-class Cercle extends Forme {
-  constructor(private rayon: number) {
-    super();
+// Classe dérivée
+class Dog extends Animal {
+  constructor(name: string, public breed: string) {
+    super(name); // Appel du constructeur parent
   }
 
-  calculerAire(): number {
-    return Math.PI * this.rayon ** 2;
+  bark(): void {
+    console.log("Woof! Woof!");
   }
 
   // Override
-  override décrire(): string {
-    return `Cercle - ${super.décrire()}`;
-  }
-}
-
-// Implements
-interface Drawable {
-  dessiner(): void;
-}
-
-class Rectangle extends Forme implements Drawable {
-  constructor(
-    private largeur: number,
-    private hauteur: number
-  ) {
-    super();
-  }
-
-  calculerAire(): number {
-    return this.largeur * this.hauteur;
-  }
-
-  dessiner(): void {
-    console.log("Dessin rectangle");
+  move(distance: number): void {
+    console.log("Running...");
+    super.move(distance);
   }
 }
 ```
 
-### Modificateurs d'accès
+### Classes abstraites
 ```typescript
-class BankAccount {
-  public readonly accountNumber: string; // accessible partout
-  protected balance: number; // accessible dans classe et sous-classes
-  private #pin: number; // vraiment privé (JavaScript private)
+// Classe abstraite (ne peut pas être instanciée)
+abstract class Shape {
+  abstract area(): number;
+  abstract perimeter(): number;
 
-  constructor(accountNumber: string, initialBalance: number, pin: number) {
-    this.accountNumber = accountNumber;
-    this.balance = initialBalance;
-    this.#pin = pin;
-  }
-
-  // Méthode privée
-  private validatePin(pin: number): boolean {
-    return this.#pin === pin;
-  }
-
-  public withdraw(amount: number, pin: number): boolean {
-    if (!this.validatePin(pin)) return false;
-    if (this.balance >= amount) {
-      this.balance -= amount;
-      return true;
-    }
-    return false;
+  describe(): string {
+    return `Area: ${this.area()}, Perimeter: ${this.perimeter()}`;
   }
 }
+
+class Circle extends Shape {
+  constructor(private radius: number) {
+    super();
+  }
+
+  area(): number {
+    return Math.PI * this.radius ** 2;
+  }
+
+  perimeter(): number {
+    return 2 * Math.PI * this.radius;
+  }
+}
+
+class Rectangle extends Shape {
+  constructor(private width: number, private height: number) {
+    super();
+  }
+
+  area(): number {
+    return this.width * this.height;
+  }
+
+  perimeter(): number {
+    return 2 * (this.width + this.height);
+  }
+}
+```
+
+### Getters & Setters
+```typescript
+class Temperature {
+  private _celsius: number = 0;
+
+  get celsius(): number {
+    return this._celsius;
+  }
+
+  set celsius(value: number) {
+    if (value < -273.15) {
+      throw new Error("Temperature below absolute zero!");
+    }
+    this._celsius = value;
+  }
+
+  get fahrenheit(): number {
+    return (this._celsius * 9/5) + 32;
+  }
+
+  set fahrenheit(value: number) {
+    this._celsius = (value - 32) * 5/9;
+  }
+}
+
+const temp = new Temperature();
+temp.celsius = 25;
+console.log(temp.fahrenheit); // 77
+```
+
+### Propriétés et méthodes statiques
+```typescript
+class MathUtils {
+  static PI: number = 3.14159;
+  static readonly E: number = 2.71828;
+
+  static circleArea(radius: number): number {
+    return this.PI * radius ** 2;
+  }
+
+  static {
+    // Static initialization block (TS 4.4+)
+    console.log("MathUtils initialized");
+  }
+}
+
+console.log(MathUtils.PI);
+console.log(MathUtils.circleArea(5));
+```
+
+### Classes génériques
+```typescript
+class Box<T> {
+  private content: T;
+
+  constructor(value: T) {
+    this.content = value;
+  }
+
+  getValue(): T {
+    return this.content;
+  }
+
+  setValue(value: T): void {
+    this.content = value;
+  }
+}
+
+const stringBox = new Box<string>("Hello");
+const numberBox = new Box<number>(42);
+
+// Contraintes génériques
+class DataStore<T extends { id: number }> {
+  private data: T[] = [];
+
+  add(item: T): void {
+    this.data.push(item);
+  }
+
+  findById(id: number): T | undefined {
+    return this.data.find(item => item.id === id);
+  }
+}
+```
+
+### Implements (implémentation d'interface)
+```typescript
+interface Printable {
+  print(): void;
+}
+
+interface Saveable {
+  save(): void;
+}
+
+class Document implements Printable, Saveable {
+  constructor(private content: string) {}
+
+  print(): void {
+    console.log(this.content);
+  }
+
+  save(): void {
+    console.log("Saving document...");
+  }
+}
+```
+
+### Private Fields (#) - ES2022
+```typescript
+class BankAccount {
+  #balance: number = 0; // Vraiment privé (runtime)
+
+  deposit(amount: number): void {
+    this.#balance += amount;
+  }
+
+  getBalance(): number {
+    return this.#balance;
+  }
+}
+
+const account = new BankAccount();
+account.deposit(100);
+// account.#balance; // Erreur: Property '#balance' is not accessible
 ```
 
 ---
@@ -521,243 +612,390 @@ class BankAccount {
 
 ### Fonctions génériques
 ```typescript
-// Generic basique
-function identité<T>(arg: T): T {
+// Generic simple
+function identity<T>(arg: T): T {
   return arg;
 }
 
-let output = identité<string>("hello");
-let inferred = identité(42); // type inféré
+let output1 = identity<string>("hello");
+let output2 = identity(42); // Type inféré
 
 // Multiple type parameters
-function paire<T, U>(premier: T, second: U): [T, U] {
-  return [premier, second];
+function pair<T, U>(first: T, second: U): [T, U] {
+  return [first, second];
 }
 
-// Generic constraints
-function longueur<T extends { length: number }>(arg: T): number {
-  return arg.length;
-}
+const result = pair("age", 30); // [string, number]
 
-// Using type parameters in constraints
+// Generic avec contrainte
 function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
   return obj[key];
 }
 
-// Generic avec valeur par défaut
-function créerArray<T = string>(length: number, value: T): T[] {
-  return Array(length).fill(value);
+const person = { name: "Alice", age: 30 };
+const name = getProperty(person, "name"); // OK
+// const invalid = getProperty(person, "invalid"); // Erreur
+```
+
+### Interfaces génériques
+```typescript
+interface Repository<T> {
+  items: T[];
+  add(item: T): void;
+  find(predicate: (item: T) => boolean): T | undefined;
+}
+
+class UserRepository implements Repository<User> {
+  items: User[] = [];
+
+  add(user: User): void {
+    this.items.push(user);
+  }
+
+  find(predicate: (user: User) => boolean): User | undefined {
+    return this.items.find(predicate);
+  }
+}
+
+// Generic interface avec contraintes
+interface Comparable<T> {
+  compareTo(other: T): number;
+}
+
+class Version implements Comparable<Version> {
+  constructor(private major: number, private minor: number) {}
+
+  compareTo(other: Version): number {
+    if (this.major !== other.major) {
+      return this.major - other.major;
+    }
+    return this.minor - other.minor;
+  }
 }
 ```
 
-### Classes génériques
+### Types génériques
 ```typescript
-// Classe générique
-class Boîte<T> {
-  constructor(private contenu: T) {}
+// Generic type alias
+type Result<T, E = Error> = 
+  | { success: true; value: T }
+  | { success: false; error: E };
 
-  getContenu(): T {
-    return this.contenu;
+function divide(a: number, b: number): Result<number> {
+  if (b === 0) {
+    return { success: false, error: new Error("Division by zero") };
+  }
+  return { success: true, value: a / b };
+}
+
+// Generic avec valeurs par défaut
+type Container<T = string> = {
+  value: T;
+};
+
+const stringContainer: Container = { value: "hello" }; // T = string par défaut
+const numberContainer: Container<number> = { value: 42 };
+
+// Multiple constraints
+type Dictionary<K extends string | number, V> = {
+  [key in K]: V;
+};
+```
+
+### Classes génériques avancées
+```typescript
+// Generic avec contraintes multiples
+class Cache<K extends string | number, V extends object> {
+  private store = new Map<K, V>();
+
+  set(key: K, value: V): void {
+    this.store.set(key, value);
   }
 
-  setContenu(contenu: T): void {
-    this.contenu = contenu;
+  get(key: K): V | undefined {
+    return this.store.get(key);
   }
 }
 
-let boîteString = new Boîte<string>("hello");
-let boîteNumber = new Boîte<number>(42);
-
-// Generic avec contraintes
-class Collection<T extends { id: number }> {
+// Generic avec méthodes génériques
+class Collection<T> {
   private items: T[] = [];
 
   add(item: T): void {
     this.items.push(item);
   }
 
-  findById(id: number): T | undefined {
-    return this.items.find(item => item.id === id);
+  map<U>(fn: (item: T) => U): U[] {
+    return this.items.map(fn);
+  }
+
+  filter(predicate: (item: T) => boolean): Collection<T> {
+    const filtered = new Collection<T>();
+    filtered.items = this.items.filter(predicate);
+    return filtered;
   }
 }
 ```
 
-### Interfaces génériques
+### Generic Constraints avancées
 ```typescript
-// Interface générique
-interface Réponse<T> {
-  data: T;
-  status: number;
-  message: string;
+// Contrainte avec extends
+function longest<T extends { length: number }>(a: T, b: T): T {
+  return a.length >= b.length ? a : b;
 }
 
-let userResponse: Réponse<Utilisateur> = {
-  data: { id: 1, nom: "Alice" },
-  status: 200,
-  message: "OK"
-};
+const longerString = longest("hello", "hi");
+const longerArray = longest([1, 2], [1, 2, 3]);
 
-// Generic avec fonction
-interface Transformer<T, U> {
-  (input: T): U;
+// Contrainte avec type parameter
+function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
 }
 
-const numberToString: Transformer<number, string> = (n) => n.toString();
-
-// Generic interface avec index signature
-interface Dictionary<T> {
-  [key: string]: T;
+// Contrainte avec constructor
+function create<T>(Constructor: new () => T): T {
+  return new Constructor();
 }
 
-let nombres: Dictionary<number> = {
-  un: 1,
-  deux: 2
-};
+class MyClass {
+  constructor() {
+    console.log("Instance created");
+  }
+}
+
+const instance = create(MyClass);
 ```
 
-### Types génériques avancés
+### Generic Utility Types
 ```typescript
-// Conditional generic type
-type TypeOrArray<T> = T extends any[] ? T : T[];
+// Custom utility types
+type Nullable<T> = T | null;
+type Optional<T> = T | undefined;
+type Maybe<T> = T | null | undefined;
 
-// Generic mapped type
-type Nullable<T> = {
-  [P in keyof T]: T[P] | null;
-};
-
-// Generic avec infer
-type FunctionReturnType<T> = T extends (...args: any[]) => infer R ? R : never;
-
-// Recursive generic type
+// Deep Partial
 type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
 
-// Variadic tuple types
-type Concat<T extends any[], U extends any[]> = [...T, ...U];
-type Result = Concat<[1, 2], [3, 4]>; // [1, 2, 3, 4]
+// Deep Readonly
+type DeepReadonly<T> = {
+  readonly [P in keyof T]: T[P] extends object ? DeepReadonly<T[P]> : T[P];
+};
+
+// Awaited (built-in in TS 4.5+)
+type MyAwaited<T> = T extends Promise<infer U> ? MyAwaited<U> : T;
 ```
 
 ---
 
 ## Utilitaires de types
 
-### Utilitaires de base
+### Partial, Required, Readonly
 ```typescript
-// Partial - rend toutes les propriétés optionnelles
-type PartialUser = Partial<Utilisateur>;
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
 
-// Required - rend toutes les propriétés requises
-type RequiredUser = Required<Partial<Utilisateur>>;
+// Partial - toutes propriétés optionnelles
+type PartialUser = Partial<User>;
+// { id?: number; name?: string; email?: string; }
 
-// Readonly - rend toutes les propriétés readonly
-type ReadonlyUser = Readonly<Utilisateur>;
+// Required - toutes propriétés obligatoires
+type RequiredUser = Required<PartialUser>;
+// { id: number; name: string; email: string; }
 
-// Record - crée un type objet
-type PageInfo = Record<'home' | 'about' | 'contact', { title: string }>;
-
-// Pick - sélectionne certaines propriétés
-type UserPreview = Pick<Utilisateur, 'nom' | 'email'>;
-
-// Omit - exclut certaines propriétés
-type UserWithoutId = Omit<Utilisateur, 'id'>;
-
-// Exclude - exclut des types d'une union
-type T0 = Exclude<"a" | "b" | "c", "a">; // "b" | "c"
-
-// Extract - extrait des types d'une union
-type T1 = Extract<"a" | "b" | "c", "a" | "f">; // "a"
-
-// NonNullable - exclut null et undefined
-type T2 = NonNullable<string | number | undefined>; // string | number
+// Readonly - toutes propriétés en lecture seule
+type ReadonlyUser = Readonly<User>;
+// { readonly id: number; readonly name: string; readonly email: string; }
 ```
 
-### Utilitaires de fonctions
+### Pick, Omit
 ```typescript
-// ReturnType - extrait le type de retour
-type T3 = ReturnType<() => string>; // string
-
-// Parameters - extrait les types des paramètres
-type T4 = Parameters<(a: string, b: number) => void>; // [string, number]
-
-// ConstructorParameters - paramètres du constructeur
-class C {
-  constructor(a: string, b: number) {}
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+  stock: number;
 }
-type T5 = ConstructorParameters<typeof C>; // [string, number]
 
-// InstanceType - type d'instance
-type T6 = InstanceType<typeof C>; // C
+// Pick - sélectionner certaines propriétés
+type ProductPreview = Pick<Product, "id" | "name" | "price">;
+// { id: number; name: string; price: number; }
 
-// ThisParameterType - type du this
-function toHex(this: Number) {
-  return this.toString(16);
-}
-type T7 = ThisParameterType<typeof toHex>; // Number
-
-// OmitThisParameter - enlève le paramètre this
-type T8 = OmitThisParameter<typeof toHex>; // () => string
+// Omit - exclure certaines propriétés
+type ProductWithoutStock = Omit<Product, "stock">;
+// { id: number; name: string; price: number; description: string; }
 ```
 
-### Utilitaires de strings
+### Record
 ```typescript
-// Uppercase - convertit en majuscules
-type T9 = Uppercase<"hello">; // "HELLO"
+// Record<Keys, Type> - objet avec clés et type de valeur
+type Role = "admin" | "user" | "guest";
 
-// Lowercase - convertit en minuscules
-type T10 = Lowercase<"HELLO">; // "hello"
+type Permissions = Record<Role, string[]>;
+// {
+//   admin: string[];
+//   user: string[];
+//   guest: string[];
+// }
 
-// Capitalize - première lettre en majuscule
-type T11 = Capitalize<"hello">; // "Hello"
-
-// Uncapitalize - première lettre en minuscule
-type T12 = Uncapitalize<"Hello">; // "hello"
-
-// Exemple pratique
-type Getters<T> = {
-  [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K];
+const permissions: Permissions = {
+  admin: ["read", "write", "delete"],
+  user: ["read", "write"],
+  guest: ["read"]
 };
 
-interface Person {
-  name: string;
-  age: number;
+// Autre exemple
+type PageConfig = Record<string, { title: string; path: string }>;
+```
+
+### Extract, Exclude
+```typescript
+type T1 = "a" | "b" | "c";
+type T2 = "a" | "c" | "d";
+
+// Extract - extraire types communs
+type Common = Extract<T1, T2>; // "a" | "c"
+
+// Exclude - exclure types
+type Diff = Exclude<T1, T2>; // "b"
+
+// Cas pratique
+type Primitive = string | number | boolean | null | undefined;
+type NonNullablePrimitive = Exclude<Primitive, null | undefined>;
+// string | number | boolean
+```
+
+### NonNullable
+```typescript
+type T = string | number | null | undefined;
+
+// NonNullable - exclure null et undefined
+type NonNull = NonNullable<T>; // string | number
+```
+
+### ReturnType, Parameters
+```typescript
+// ReturnType - type de retour d'une fonction
+function getUser() {
+  return { id: 1, name: "Alice", email: "alice@example.com" };
 }
 
-type PersonGetters = Getters<Person>;
-// { getName: () => string; getAge: () => number; }
+type User = ReturnType<typeof getUser>;
+// { id: number; name: string; email: string; }
+
+// Parameters - types des paramètres
+function createUser(name: string, age: number, active: boolean) {
+  return { name, age, active };
+}
+
+type CreateUserParams = Parameters<typeof createUser>;
+// [string, number, boolean]
+
+// Utilisation
+function callCreateUser(...args: CreateUserParams) {
+  return createUser(...args);
+}
+```
+
+### ConstructorParameters, InstanceType
+```typescript
+class Person {
+  constructor(public name: string, public age: number) {}
+}
+
+// ConstructorParameters - types des paramètres du constructeur
+type PersonParams = ConstructorParameters<typeof Person>;
+// [string, number]
+
+// InstanceType - type de l'instance
+type PersonInstance = InstanceType<typeof Person>;
+// Person
+```
+
+### Awaited (TS 4.5+)
+```typescript
+// Awaited - extrait le type d'une Promise
+type StringPromise = Promise<string>;
+type AwaitedString = Awaited<StringPromise>; // string
+
+type NestedPromise = Promise<Promise<number>>;
+type AwaitedNumber = Awaited<NestedPromise>; // number
+
+// Cas pratique
+async function fetchUser() {
+  return { id: 1, name: "Alice" };
+}
+
+type User = Awaited<ReturnType<typeof fetchUser>>;
+// { id: number; name: string; }
+```
+
+### ThisType
+```typescript
+// ThisType - définir le type de 'this' dans un objet
+type ObjectDescriptor<Data, Methods> = {
+  data?: Data;
+  methods?: Methods & ThisType<Data & Methods>;
+};
+
+function makeObject<Data, Methods>(
+  desc: ObjectDescriptor<Data, Methods>
+): Data & Methods {
+  const data = desc.data || {};
+  const methods = desc.methods || {};
+  return { ...data, ...methods } as Data & Methods;
+}
+
+const obj = makeObject({
+  data: { x: 0, y: 0 },
+  methods: {
+    moveBy(dx: number, dy: number) {
+      this.x += dx; // OK: this a le bon type
+      this.y += dy;
+    }
+  }
+});
 ```
 
 ### Utilitaires personnalisés
 ```typescript
-// DeepReadonly
-type DeepReadonly<T> = {
-  readonly [P in keyof T]: T[P] extends object 
-    ? DeepReadonly<T[P]> 
-    : T[P];
+// Mutable - retirer readonly
+type Mutable<T> = {
+  -readonly [P in keyof T]: T[P];
 };
 
-// Awaited (built-in depuis TS 4.5)
-type A = Awaited<Promise<string>>; // string
-type B = Awaited<Promise<Promise<number>>>; // number
-
-// PickByValue - sélectionne par type de valeur
-type PickByValue<T, V> = {
-  [K in keyof T as T[K] extends V ? K : never]: T[K];
+// DeepPartial
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
 
-// RequireAtLeastOne
-type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = 
-  Pick<T, Exclude<keyof T, Keys>> 
-  & {
-    [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
-  }[Keys];
+// PickByType - sélectionner propriétés par type
+type PickByType<T, U> = {
+  [K in keyof T as T[K] extends U ? K : never]: T[K];
+};
 
-// RequireOnlyOne
-type RequireOnlyOne<T, Keys extends keyof T = keyof T> = 
-  Pick<T, Exclude<keyof T, Keys>> 
-  & {
-    [K in Keys]-?: Required<Pick<T, K>> & Partial<Record<Exclude<Keys, K>, undefined>>;
-  }[Keys];
+interface Example {
+  name: string;
+  age: number;
+  active: boolean;
+  count: number;
+}
+
+type NumberProps = PickByType<Example, number>;
+// { age: number; count: number; }
+
+// OmitByType - exclure propriétés par type
+type OmitByType<T, U> = {
+  [K in keyof T as T[K] extends U ? never : K]: T[K];
+};
+
+type NonNumberProps = OmitByType<Example, number>;
+// { name: string; active: boolean; }
 ```
 
 ---
@@ -766,7 +1004,186 @@ type RequireOnlyOne<T, Keys extends keyof T = keyof T> =
 
 ### TypeScript 5.0
 
+#### const Type Parameters
+```typescript
+// Préserve les types littéraux
+function makeArray<const T>(items: T[]): T[] {
+  return items;
+}
+
+// Sans const
+const arr1 = makeArray([1, 2, 3]); // number[]
+
+// Avec const
+const arr2 = makeArray([1, 2, 3] as const); // readonly [1, 2, 3]
+```
+
 #### Decorators (Stage 3)
+```typescript
+// Nouveaux decorators standard
+function logged(value: Function, context: ClassMethodDecoratorContext) {
+  return function(this: any, ...args: any[]) {
+    console.log(`Calling ${String(context.name)} with:`, args);
+    return value.apply(this, args);
+  };
+}
+
+class Calculator {
+  @logged
+  add(a: number, b: number) {
+    return a + b;
+  }
+}
+```
+
+#### extends pour configuration
+```typescript
+// tsconfig.json peut étendre plusieurs fichiers
+{
+  "extends": ["./base.json", "./strict.json"]
+}
+```
+
+### TypeScript 5.1
+
+#### Undefined-Returning Functions
+```typescript
+// Amélioration du return undefined implicite
+function doSomething(): undefined {
+  // Plus besoin de return explicite
+}
+```
+
+#### Getters et Setters avec types différents
+```typescript
+class Thing {
+  #value: number = 0;
+
+  get value(): number {
+    return this.#value;
+  }
+
+  set value(newValue: number | string) {
+    if (typeof newValue === "string") {
+      this.#value = parseInt(newValue);
+    } else {
+      this.#value = newValue;
+    }
+  }
+}
+```
+
+### TypeScript 5.2
+
+#### using Declarations
+```typescript
+// Automatic resource cleanup
+interface Disposable {
+  [Symbol.dispose](): void;
+}
+
+function getResource(): Disposable {
+  return {
+    [Symbol.dispose]() {
+      console.log("Resource cleaned up");
+    }
+  };
+}
+
+{
+  using resource = getResource();
+  // Utilisez resource
+} // Automatiquement dispose() appelé
+```
+
+#### Decorator Metadata
+```typescript
+// Accès aux métadonnées des decorators
+type Context = {
+  kind: string;
+  name: string | symbol;
+  metadata: Record<PropertyKey, unknown>;
+};
+```
+
+### TypeScript 5.3
+
+#### Import Attributes
+```typescript
+// Assertions d'import pour JSON
+import data from "./data.json" with { type: "json" };
+
+// Pour CSS Modules
+import styles from "./styles.css" with { type: "css" };
+```
+
+#### switch(true) Narrowing
+```typescript
+function area(shape: Circle | Square) {
+  switch (true) {
+    case "radius" in shape:
+      return Math.PI * shape.radius ** 2;
+    case "sideLength" in shape:
+      return shape.sideLength ** 2;
+  }
+}
+```
+
+### TypeScript 5.4
+
+#### NoInfer Utility Type
+```typescript
+// Empêcher l'inférence de type
+function createStreetLight<C extends string>(
+  colors: C[],
+  defaultColor?: NoInfer<C>
+) {
+  // defaultColor doit être un des colors, pas inféré indépendamment
+}
+
+createStreetLight(["red", "yellow", "green"], "red"); // OK
+// createStreetLight(["red", "yellow", "green"], "blue"); // Erreur
+```
+
+#### Object.groupBy et Map.groupBy
+```typescript
+// Support natif TypeScript
+const data = [
+  { name: "Alice", age: 25 },
+  { name: "Bob", age: 30 },
+  { name: "Charlie", age: 25 }
+];
+
+const grouped = Object.groupBy(data, (person) => person.age);
+// { 25: [Alice, Charlie], 30: [Bob] }
+```
+
+### TypeScript 5.5
+
+#### Inferred Type Predicates
+```typescript
+// Type guards inférés automatiquement
+function isString(value: unknown) {
+  return typeof value === "string";
+}
+
+// TypeScript infère: value is string
+const items = [1, "hello", 2, "world"];
+const strings = items.filter(isString); // string[]
+```
+
+#### Regular Expression Syntax Checking
+```typescript
+// Vérification de syntaxe des regex
+const regex1 = /hello/; // OK
+// const regex2 = /hello(/; // Erreur de syntaxe détectée
+```
+
+---
+
+## Decorators
+
+### Class Decorators
 ```typescript
 // Decorator de classe
 function sealed(constructor: Function) {
@@ -782,13 +1199,35 @@ class Greeter {
   }
 }
 
-// Decorator de méthode
-function log(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-  const originalMethod = descriptor.value;
-  descriptor.value = function(...args: any[]) {
-    console.log(`Appel de ${propertyKey} avec`, args);
-    return originalMethod.apply(this, args);
+// Decorator avec paramètres
+function component(name: string) {
+  return function(constructor: Function) {
+    console.log(`Registering component: ${name}`);
   };
+}
+
+@component("MyComponent")
+class MyComponent {}
+```
+
+### Method Decorators
+```typescript
+// Decorator de méthode
+function log(
+  target: any,
+  propertyKey: string,
+  descriptor: PropertyDescriptor
+) {
+  const originalMethod = descriptor.value;
+
+  descriptor.value = function(...args: any[]) {
+    console.log(`Calling ${propertyKey} with:`, args);
+    const result = originalMethod.apply(this, args);
+    console.log(`Result:`, result);
+    return result;
+  };
+
+  return descriptor;
 }
 
 class Calculator {
@@ -797,407 +1236,298 @@ class Calculator {
     return a + b;
   }
 }
-
-// Auto-accessor decorators
-class Person {
-  accessor name: string = "";
-}
-```
-
-#### const Type Parameters
-```typescript
-// Force les inférences littérales
-function makeArray<const T>(arr: T[]): T[] {
-  return arr;
-}
-
-const arr1 = makeArray([1, 2, 3]); // type: number[]
-const arr2 = makeArray([1, 2, 3] as const); // type: readonly [1, 2, 3]
-
-// Avec const type parameter
-function makeArrayConst<const T>(arr: T[]): T[] {
-  return arr;
-}
-
-const arr3 = makeArrayConst([1, 2, 3]); // type: (1 | 2 | 3)[]
-```
-
-#### Enums comme Union Types
-```typescript
-// TypeScript 5.0 améliore les enums
-enum LogLevel {
-  ERROR,
-  WARN,
-  INFO,
-  DEBUG
-}
-
-// Peut être utilisé comme union
-function log(level: LogLevel, message: string) {
-  // ...
-}
-
-// Type narrowing amélioré
-function check(level: LogLevel) {
-  if (level === LogLevel.ERROR) {
-    // level est maintenant LogLevel.ERROR
-  }
-}
-```
-
-### TypeScript 5.1
-
-#### Undefined-Returning Functions in Void Context
-```typescript
-// Avant: erreur, maintenant: OK
-function doSomething(callback: () => void) {
-  callback();
-}
-
-doSomething(() => {
-  return undefined; // OK maintenant
-});
-```
-
-#### Unrelated Types for getters and setters
-```typescript
-class Thing {
-  #size = 0;
-
-  // getter retourne un type
-  get size(): number {
-    return this.#size;
-  }
-
-  // setter accepte un type différent
-  set size(value: number | string | boolean) {
-    const num = Number(value);
-    if (!Number.isFinite(num)) {
-      this.#size = 0;
-      return;
-    }
-    this.#size = num;
-  }
-}
-```
-
-### TypeScript 5.2
-
-#### using Declarations
-```typescript
-// Gestion automatique des ressources
-interface Disposable {
-  [Symbol.dispose](): void;
-}
-
-function doWork() {
-  using file = getFileHandle(); // dispose() appelé automatiquement
-  // ... utiliser file
-} // file.dispose() appelé ici
-
-// Async disposal
-interface AsyncDisposable {
-  [Symbol.asyncDispose](): Promise<void>;
-}
-
-async function doAsyncWork() {
-  await using connection = await getConnection();
-  // ... utiliser connection
-} // await connection.asyncDispose() appelé ici
-```
-
-#### Decorator Metadata
-```typescript
-// Métadonnées pour decorators
-type Metadata = {
-  name: string;
-  version: number;
-};
-
-function setMetadata(metadata: Metadata) {
-  return (target: any, context: ClassDecoratorContext) => {
-    context.metadata[context.name] = metadata;
-  };
-}
-
-@setMetadata({ name: "MyClass", version: 1 })
-class MyClass {}
-```
-
-### TypeScript 5.3
-
-#### Import Attributes
-```typescript
-// Import avec attributs
-import data from "./data.json" with { type: "json" };
-
-// Import de modules
-import styles from "./styles.css" with { type: "css" };
-```
-
-#### Narrowing avec switch(true)
-```typescript
-function processValue(value: string | number) {
-  switch (true) {
-    case typeof value === "string":
-      // value est string ici
-      console.log(value.toUpperCase());
-      break;
-    case typeof value === "number":
-      // value est number ici
-      console.log(value.toFixed(2));
-      break;
-  }
-}
-```
-
-### TypeScript 5.4
-
-#### NoInfer Utility Type
-```typescript
-// Empêche l'inférence de type
-function createStreetLight<C extends string>(
-  colors: C[],
-  defaultColor?: NoInfer<C>
-) {
-  // ...
-}
-
-createStreetLight(["red", "yellow", "green"], "red"); // OK
-createStreetLight(["red", "yellow", "green"], "blue"); // Erreur
-```
-
-#### Preserve Narrowing in Closures
-```typescript
-// Meilleure préservation du narrowing
-function processValue(value: string | number) {
-  if (typeof value === "string") {
-    // value est string
-    setTimeout(() => {
-      // value est toujours string ici maintenant
-      console.log(value.toUpperCase());
-    }, 100);
-  }
-}
-```
-
-### TypeScript 5.5
-
-#### Inferred Type Predicates
-```typescript
-// Les type predicates sont maintenant inférés
-function isString(value: unknown) {
-  return typeof value === "string";
-}
-
-// TypeScript infère maintenant: value is string
-function processValue(value: unknown) {
-  if (isString(value)) {
-    // value est string ici
-    console.log(value.toUpperCase());
-  }
-}
-
-// Fonctionne avec filter
-const values: unknown[] = [1, "hello", 2, "world"];
-const strings = values.filter(isString); // string[]
-```
-
-#### Regular Expression Syntax Checking
-```typescript
-// Vérification de syntaxe regex
-const regex1 = /[a-z]/; // OK
-const regex2 = /[z-a]/; // Erreur: range invalide
-const regex3 = /(?<name>\w+)/; // OK - named group
-```
-
----
-
-## Decorators
-
-### Class Decorators
-```typescript
-function Component(config: { selector: string }) {
-  return function<T extends { new(...args: any[]): {} }>(constructor: T) {
-    return class extends constructor {
-      selector = config.selector;
-    };
-  };
-}
-
-@Component({ selector: 'app-root' })
-class AppComponent {
-  title = "Mon App";
-}
-```
-
-### Method Decorators
-```typescript
-function Memoize(
-  target: any,
-  propertyKey: string,
-  descriptor: PropertyDescriptor
-) {
-  const original = descriptor.value;
-  const cache = new Map();
-
-  descriptor.value = function(...args: any[]) {
-    const key = JSON.stringify(args);
-    if (cache.has(key)) {
-      return cache.get(key);
-    }
-    const result = original.apply(this, args);
-    cache.set(key, result);
-    return result;
-  };
-}
-
-class Calculator {
-  @Memoize
-  fibonacci(n: number): number {
-    if (n <= 1) return n;
-    return this.fibonacci(n - 1) + this.fibonacci(n - 2);
-  }
-}
 ```
 
 ### Property Decorators
 ```typescript
-function MinLength(length: number) {
+// Decorator de propriété
+function readonly(target: any, propertyKey: string) {
+  Object.defineProperty(target, propertyKey, {
+    writable: false
+  });
+}
+
+class Person {
+  @readonly
+  name: string = "Alice";
+}
+
+// Decorator avec validation
+function min(limit: number) {
   return function(target: any, propertyKey: string) {
-    let value: string;
+    let value: number;
 
     const getter = () => value;
-    const setter = (newVal: string) => {
-      if (newVal.length < length) {
-        throw new Error(`${propertyKey} doit avoir au moins ${length} caractères`);
+    const setter = (newVal: number) => {
+      if (newVal < limit) {
+        throw new Error(`${propertyKey} must be at least ${limit}`);
       }
       value = newVal;
     };
 
     Object.defineProperty(target, propertyKey, {
       get: getter,
-      set: setter,
-      enumerable: true,
-      configurable: true
+      set: setter
     });
   };
 }
 
-class User {
-  @MinLength(3)
-  username: string;
+class Product {
+  @min(0)
+  price: number = 0;
 }
 ```
 
 ### Parameter Decorators
 ```typescript
-function Required(
-  target: Object,
-  propertyKey: string | symbol,
+// Decorator de paramètre
+function required(
+  target: any,
+  propertyKey: string,
   parameterIndex: number
 ) {
-  const existingRequiredParameters: number[] = 
-    Reflect.getOwnMetadata("required", target, propertyKey) || [];
-  
-  existingRequiredParameters.push(parameterIndex);
-  
-  Reflect.defineMetadata(
-    "required",
-    existingRequiredParameters,
-    target,
-    propertyKey
-  );
+  console.log(`Parameter ${parameterIndex} of ${propertyKey} is required`);
 }
 
 class UserService {
-  createUser(@Required name: string, age?: number) {
+  createUser(
+    @required name: string,
+    @required email: string,
+    age?: number
+  ) {
     // ...
   }
 }
+```
+
+### Accessor Decorators
+```typescript
+// Decorator de getter/setter
+function configurable(value: boolean) {
+  return function(
+    target: any,
+    propertyKey: string,
+    descriptor: PropertyDescriptor
+  ) {
+    descriptor.configurable = value;
+  };
+}
+
+class Point {
+  private _x: number = 0;
+
+  @configurable(false)
+  get x() {
+    return this._x;
+  }
+
+  set x(value: number) {
+    this._x = value;
+  }
+}
+```
+
+### Decorator Factory
+```typescript
+// Factory pour créer des decorators configurables
+function enumerable(value: boolean) {
+  return function(
+    target: any,
+    propertyKey: string,
+    descriptor: PropertyDescriptor
+  ) {
+    descriptor.enumerable = value;
+  };
+}
+
+class Example {
+  @enumerable(false)
+  method() {}
+}
+```
+
+### Composition de Decorators
+```typescript
+// Plusieurs decorators sur une même cible
+function first() {
+  console.log("first(): factory evaluated");
+  return function(
+    target: any,
+    propertyKey: string,
+    descriptor: PropertyDescriptor
+  ) {
+    console.log("first(): called");
+  };
+}
+
+function second() {
+  console.log("second(): factory evaluated");
+  return function(
+    target: any,
+    propertyKey: string,
+    descriptor: PropertyDescriptor
+  ) {
+    console.log("second(): called");
+  };
+}
+
+class ExampleClass {
+  @first()
+  @second()
+  method() {}
+}
+
+// Ordre d'évaluation:
+// first(): factory evaluated
+// second(): factory evaluated
+// second(): called
+// first(): called
+```
+
+### Metadata avec reflect-metadata
+```typescript
+import "reflect-metadata";
+
+// Définir des métadonnées
+function format(formatString: string) {
+  return Reflect.metadata("format", formatString);
+}
+
+class Greeter {
+  @format("Hello, %s")
+  greeting: string = "";
+}
+
+// Lire les métadonnées
+const formatMetadata = Reflect.getMetadata(
+  "format",
+  new Greeter(),
+  "greeting"
+);
+console.log(formatMetadata); // "Hello, %s"
 ```
 
 ---
 
 ## Modules
 
-### Export & Import
+### Import/Export ES6
 ```typescript
-// ===== Export =====
-
-// Named exports
+// export nommé
 export const PI = 3.14;
-export function addition(a: number, b: number): number {
+export function add(a: number, b: number) {
   return a + b;
 }
-export class Utilisateur {}
+export class Calculator {}
 
-// Export groupé
-const A = 1;
-const B = 2;
-export { A, B };
+// export par défaut
+export default class MyClass {}
 
-// Export avec alias
-export { A as ConstanteA, B as ConstanteB };
+// Import nommé
+import { PI, add } from "./math";
 
-// Re-export
-export { Utilisateur as User } from './utilisateur';
-export * from './utils';
-export * as utils from './utils';
-
-// Default export
-export default class Application {}
-
-// ===== Import =====
-
-// Named imports
-import { PI, addition } from './math';
-
-// Import avec alias
-import { Utilisateur as User } from './utilisateur';
+// Import par défaut
+import MyClass from "./myclass";
 
 // Import tout
-import * as math from './math';
+import * as Math from "./math";
 
-// Import default
-import Application from './app';
+// Import avec alias
+import { add as addition } from "./math";
 
-// Import default + named
-import React, { useState, useEffect } from 'react';
+// Re-export
+export { add } from "./math";
+export * from "./utils";
+```
 
-// Import pour side-effects
-import './polyfills';
+### Type-only Imports/Exports
+```typescript
+// Type-only import (supprimé au runtime)
+import type { User } from "./types";
+import { type Admin, normalFunction } from "./types";
 
-// Dynamic import
-const module = await import('./module');
+// Type-only export
+export type { User };
+export { type Admin, normalFunction };
 
-// Import type (supprimé à la compilation)
-import type { User } from './types';
-import { type Config, data } from './config';
+// Import d'interfaces (toujours type-only)
+import { MyInterface } from "./interfaces";
+```
+
+### Dynamic Imports
+```typescript
+// Import dynamique
+async function loadModule() {
+  const module = await import("./heavy-module");
+  module.doSomething();
+}
+
+// Import conditionnel
+if (condition) {
+  const { feature } = await import("./feature");
+  feature.init();
+}
+
+// Type d'un import dynamique
+type LazyModule = typeof import("./module");
+```
+
+### Namespace vs Modules
+```typescript
+// ❌ Éviter les namespaces (ancien style)
+namespace Utils {
+  export function formatDate(date: Date): string {
+    return date.toISOString();
+  }
+}
+
+// ✅ Préférer les modules ES6
+// utils.ts
+export function formatDate(date: Date): string {
+  return date.toISOString();
+}
+
+// main.ts
+import { formatDate } from "./utils";
 ```
 
 ### Module Resolution
 ```typescript
-// Triple-slash directives
-/// <reference path="./types.d.ts" />
-/// <reference types="node" />
-
-// Module augmentation
-declare module 'express' {
-  interface Request {
-    user?: User;
+// tsconfig.json
+{
+  "compilerOptions": {
+    "moduleResolution": "bundler", // ou "node", "node16", "nodenext"
+    "baseUrl": "./src",
+    "paths": {
+      "@models/*": ["models/*"],
+      "@utils/*": ["utils/*"],
+      "@components/*": ["components/*"]
+    }
   }
 }
 
-// Global augmentation
+// Utilisation
+import { User } from "@models/user";
+import { formatDate } from "@utils/date";
+```
+
+### Declaration Files (.d.ts)
+```typescript
+// types.d.ts - Déclarations de types
+declare module "my-library" {
+  export function doSomething(value: string): number;
+  export const VERSION: string;
+}
+
+// Déclaration globale
 declare global {
   interface Window {
-    myApp: App;
+    myGlobalVar: string;
   }
 }
 
-// Ambient modules
-declare module '*.css' {
+// Module ambient
+declare module "*.css" {
   const content: { [className: string]: string };
   export default content;
 }
