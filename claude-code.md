@@ -153,5 +153,3 @@
 | 93 | `"Ultra think"` | Forcer une profondeur de raisonnement maximale |
 
 ---
-
-*Pour en apprendre plus sur l'IA, abonne-toi à Lucien !*
