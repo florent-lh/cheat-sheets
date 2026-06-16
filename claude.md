@@ -2,34 +2,34 @@
 
 ---
 
-## 📋 Table des matières
+## Table des matières
 
 ### Raccourcis de prompts
-1. [📚 Expliquer & Comprendre](#-expliquer--comprendre) — 15 commandes
-2. [🤔 Réfléchir & Décider](#-réfléchir--décider) — 13 commandes
-3. [✍️ Écriture](#️-écriture) — 11 commandes
-4. [📧 Email & Messages](#-email--messages) — 9 commandes
-5. [💼 Travail](#-travail) — 9 commandes
-6. [🎭 Jeu de Rôle & Perspective](#-jeu-de-rôle--perspective) — 3 commandes
-7. [🎓 Apprentissage](#-apprentissage) — 8 commandes
-8. [🎨 Créatif](#-créatif) — 11 commandes
-9. [🏠 Maison & Vie](#-maison--vie) — 9 commandes
-10. [🌱 Esprit & Progression](#-esprit--progression) — 9 commandes
+1. [Expliquer & Comprendre](#expliquer--comprendre) — 15 commandes
+2. [Réfléchir & Décider](#réfléchir--décider) — 13 commandes
+3. [Écriture](#écriture) — 11 commandes
+4. [Email & Messages](#email--messages) — 9 commandes
+5. [Travail](#travail) — 9 commandes
+6. [Jeu de Rôle & Perspective](#jeu-de-rôle--perspective) — 3 commandes
+7. [Apprentissage](#apprentissage) — 8 commandes
+8. [Créatif](#créatif) — 11 commandes
+9. [Maison & Vie](#maison--vie) — 9 commandes
+10. [Esprit & Progression](#esprit--progression) — 9 commandes
 
 ### Commandes Claude Code
-11. [🗂️ Gestion de Projet](#️-claude-code--gestion-de-projet) — 12 commandes
-12. [ℹ️ Informations & Statut](#ℹ️-claude-code--informations--statut) — 9 commandes
-13. [🎛️ Contrôle du Mode & du Modèle](#️-claude-code--contrôle-du-mode--du-modèle) — 6 commandes
-14. [⚙️ Gestion des Fonctionnalités](#️-claude-code--gestion-des-fonctionnalités) — 8 commandes
-15. [🖥️ Paramètres de l'Environnement](#️-claude-code--paramètres-de-lenvironnement) — 5 commandes
-16. [🔌 Intégrations & Extensions](#-claude-code--intégrations--extensions) — 13 commandes
-17. [🔀 Commandes de Regroupement](#-claude-code--commandes-de-regroupement) — 2 commandes
-18. [💻 Commandes CLI](#-claude-code--commandes-cli) — 25 commandes
-19. [⌨️ Raccourcis Clavier & Notation](#️-claude-code--raccourcis-clavier--notation) — 13 commandes
+11. [Gestion de Projet](#claude-code--gestion-de-projet) — 12 commandes
+12. [Informations & Statut](#claude-code--informations--statut) — 9 commandes
+13. [Contrôle du Mode & du Modèle](#claude-code--contrôle-du-mode--du-modèle) — 6 commandes
+14. [Gestion des Fonctionnalités](#claude-code--gestion-des-fonctionnalités) — 8 commandes
+15. [Paramètres de l'Environnement](#claude-code--paramètres-de-lenvironnement) — 5 commandes
+16. [Intégrations & Extensions](#claude-code--intégrations--extensions) — 13 commandes
+17. [Commandes de Regroupement](#claude-code--commandes-de-regroupement) — 2 commandes
+18. [Commandes CLI](#claude-code--commandes-cli) — 25 commandes
+19. [⌨ Raccourcis Clavier & Notation](#claude-code--raccourcis-clavier--notation) — 13 commandes
 
 ---
 
-## 📚 Expliquer & Comprendre
+## Expliquer & Comprendre
 
 1. **/ELI5 [sujet]** — Force Claude à oublier tout le jargon et à expliquer comme si tu avais 5 ans. Idéal pour les concepts flous que tu fais semblant de comprendre.
 2. **/ELI25 [sujet]** — Même idée mais niveau ado. À utiliser quand /ELI5 est trop basique mais que les explications de manuel restent trop denses.
@@ -49,7 +49,7 @@
 
 ---
 
-## 🤔 Réfléchir & Décider
+## Réfléchir & Décider
 
 1. **/POUR ET CONTRE [sujet]** — Liste équilibrée des avantages vs inconvénients. L'outil de décision classique.
 2. **/COMPARER [A] vs [B]** — Confrontation point par point de deux options, produits ou idées.
@@ -67,7 +67,7 @@
 
 ---
 
-## ✍️ Écriture
+## Écriture
 
 1. **/RÉÉCRIRE [colle le texte]** — Te donne une version neuve du même contenu.
 2. **/RACCOURCIR [colle le texte]** — Réduit la longueur sans perdre le message.
@@ -83,7 +83,7 @@
 
 ---
 
-## 📧 Email & Messages
+## Email & Messages
 
 1. **/EMAIL À PARTIR DE [notes en vrac]** — Transforme tes notes brutes en email complet et soigné.
 2. **/RÉPONDRE À [colle l'email]** — Rédige une réponse à un email reçu.
@@ -97,7 +97,7 @@
 
 ---
 
-## 💼 Travail
+## Travail
 
 1. **/ORDRE DU JOUR POUR [sujet]** — Ordre du jour structuré avec créneaux et points de discussion.
 2. **/ACTIONS À PARTIR DE [colle les notes]** — Sort les prochaines étapes claires d'un compte rendu en vrac.
@@ -111,7 +111,7 @@
 
 ---
 
-## 🎭 Jeu de Rôle & Perspective
+## Jeu de Rôle & Perspective
 
 1. **/JOUE LE RÔLE DE [rôle : question]** — Claude répond en médecin, avocat, coach, prof, etc. (Vérifie toujours auprès d'un pro.)
 2. **/PLUSIEURS PERSPECTIVES SUR [sujet]** — Montre comment différents groupes verraient la même chose.
@@ -119,7 +119,7 @@
 
 ---
 
-## 🎓 Apprentissage
+## Apprentissage
 
 1. **/INTERROGE-MOI SUR [sujet]** — Claude devient maître du jeu et teste tes connaissances.
 2. **/FLASHCARDS POUR [sujet]** — Paires terme-définition à copier dans des applis comme Anki ou Quizlet.
@@ -132,7 +132,7 @@
 
 ---
 
-## 🎨 Créatif
+## Créatif
 
 1. **/HISTOIRE SUR [prompt]** — Courte fiction à partir de ton et style.
 2. **/POÈME SUR [sujet]** — Un vers sur n'importe quel sujet, dans n'importe quel style.
@@ -148,7 +148,7 @@
 
 ---
 
-## 🏠 Maison & Vie
+## Maison & Vie
 
 1. **/RECETTE POUR [plat]** — Recette complète avec ingrédients et étapes.
 2. **/SUBSTITUT POUR [ingrédient]** — Remplacements quand il te manque un truc. (À recouper en cas d'allergie ou régime.)
@@ -162,7 +162,7 @@
 
 ---
 
-## 🌱 Esprit & Progression
+## Esprit & Progression
 
 1. **/AMORCE DE JOURNAL POUR [humeur/thème]** — Une question pour déclencher la réflexion dans ton journal.
 2. **/AMORCES DE GRATITUDE** — Des questions pour remarquer ce qui va bien dans ta vie.
