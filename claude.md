@@ -149,5 +149,3 @@
 
 ---
 
-
-*Pour en apprendre plus sur l'IA, abonne-toi à Lucien !*
