@@ -1,4 +1,31 @@
-# 100 raccourcis de prompt Claude
+# Raccourcis de prompt Claude
+
+---
+
+## 📋 Table des matières
+
+### Raccourcis de prompts
+1. [📚 Expliquer & Comprendre](#-expliquer--comprendre) — 15 commandes
+2. [🤔 Réfléchir & Décider](#-réfléchir--décider) — 13 commandes
+3. [✍️ Écriture](#️-écriture) — 11 commandes
+4. [📧 Email & Messages](#-email--messages) — 9 commandes
+5. [💼 Travail](#-travail) — 9 commandes
+6. [🎭 Jeu de Rôle & Perspective](#-jeu-de-rôle--perspective) — 3 commandes
+7. [🎓 Apprentissage](#-apprentissage) — 8 commandes
+8. [🎨 Créatif](#-créatif) — 11 commandes
+9. [🏠 Maison & Vie](#-maison--vie) — 9 commandes
+10. [🌱 Esprit & Progression](#-esprit--progression) — 9 commandes
+
+### Commandes Claude Code
+11. [🗂️ Gestion de Projet](#️-claude-code--gestion-de-projet) — 12 commandes
+12. [ℹ️ Informations & Statut](#ℹ️-claude-code--informations--statut) — 9 commandes
+13. [🎛️ Contrôle du Mode & du Modèle](#️-claude-code--contrôle-du-mode--du-modèle) — 6 commandes
+14. [⚙️ Gestion des Fonctionnalités](#️-claude-code--gestion-des-fonctionnalités) — 8 commandes
+15. [🖥️ Paramètres de l'Environnement](#️-claude-code--paramètres-de-lenvironnement) — 5 commandes
+16. [🔌 Intégrations & Extensions](#-claude-code--intégrations--extensions) — 13 commandes
+17. [🔀 Commandes de Regroupement](#-claude-code--commandes-de-regroupement) — 2 commandes
+18. [💻 Commandes CLI](#-claude-code--commandes-cli) — 25 commandes
+19. [⌨️ Raccourcis Clavier & Notation](#️-claude-code--raccourcis-clavier--notation) — 13 commandes
 
 ---
 
@@ -148,4 +175,3 @@
 9. **/RECOMMANDATIONS DE LIVRES COMME [livre ou sujet]** — Suggestions du type « si tu as aimé X, tu aimeras... ».
 
 ---
-
