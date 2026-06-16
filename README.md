@@ -5,6 +5,8 @@
 - [Accessibilité](./accessibilite.md)
 - [Algo](./algo.md)
 - [Angular](./angular.md)
+- [Claude code](./claude-code.md)
+- [Claude](./claude.md)
 - [CLI](./cli.md)
 - [CSS](./css.md)
 - [Git](./git.md)
